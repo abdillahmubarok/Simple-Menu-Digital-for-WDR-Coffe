@@ -49,9 +49,9 @@ function HeaderContent({ activePage }: HeaderProps) {
     <div className="container mx-auto px-4 flex justify-between items-center">
       <Link href="/">
         <Image
-          src="https://i.ibb.co/20GLj11v/wdr-coffee-logo.png"
+          src="https://i.ibb.co.com/wFBDKrfG/wdr-coffee-logo-hgf2u6t2.jpg"
           alt="WDR Coffee Logo"
-          width={125}
+          width={75}
           height={75}
           className="h-12 w-auto"
           priority
