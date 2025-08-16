@@ -9,6 +9,7 @@ import { useCart } from '@/hooks/use-cart';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
+import { Footer } from '@/components/layout/Footer';
 
 function CheckoutPageContent() {
   const searchParams = useSearchParams();
@@ -17,7 +18,7 @@ function CheckoutPageContent() {
 
   if (cart.items.length === 0) {
     return (
-      <div className="text-center">
+      <div className="text-center py-16">
         <h2 className="text-2xl font-bold mb-4">Keranjang Anda Kosong</h2>
         <p className="text-muted-foreground mb-6">
           Sepertinya Anda belum menambahkan item apapun ke keranjang.
@@ -53,7 +54,7 @@ function CheckoutPageContent() {
 
 export default function CheckoutPage() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col">
       <header className="py-4 border-b">
         <div className="container mx-auto px-4 flex justify-between items-center">
           <Link href="/" className="text-2xl font-bold text-primary">
@@ -67,11 +68,12 @@ export default function CheckoutPage() {
           </Button>
         </div>
       </header>
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-8 flex-1">
         <Suspense fallback={<div>Loading...</div>}>
           <CheckoutPageContent />
         </Suspense>
       </main>
+      <Footer />
     </div>
   );
 }
