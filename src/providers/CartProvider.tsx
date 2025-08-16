@@ -80,10 +80,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
   };
 
   const updateQty = (itemId: string, qty: number) => {
+    if (qty < 1) {
+      toast({ title: 'Item dihapus dari keranjang' });
+    }
     setCart((prevCart) => {
       if (qty < 1) {
         const newItems = prevCart.items.filter((i) => i.id !== itemId);
-        toast({ title: 'Item dihapus dari keranjang' });
         return { ...prevCart, items: newItems };
       }
 
@@ -104,12 +106,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
   };
 
   const clearCart = (showToast = true) => {
+    if (showToast) {
+       toast({ title: 'Keranjang dikosongkan', description: 'Silakan mulai memesan lagi.' });
+    }
     setCart(getInitialCart());
     try {
       localStorage.removeItem(CART_STORAGE_KEY);
-      if (showToast) {
-        toast({ title: 'Keranjang dikosongkan', description: 'Silakan mulai memesan lagi.' });
-      }
     } catch (error) {
       console.warn('Could not clear cart from localStorage', error);
     }
