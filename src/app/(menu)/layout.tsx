@@ -1,5 +1,5 @@
 import { Footer } from "@/components/layout/Footer";
-import { MenuHeader } from "@/components/menu/MenuHeader";
+import { Header } from "@/components/layout/Header";
 import { CartIconButton } from "@/components/cart/CartIconButton";
 
 export default function MenuLayout({
@@ -9,7 +9,7 @@ export default function MenuLayout({
 }) {
   return (
     <div className="flex min-h-screen w-full flex-col">
-      <MenuHeader />
+      <Header activePage="home" />
       <main className="flex-1 container mx-auto px-4 py-8">{children}</main>
       <CartIconButton />
       <Footer />

@@ -51,7 +51,7 @@ export function Footer() {
       label: 'Kontak',
     },
     {
-      href: 'https://maps.app.goo.gl/wLzJ41VvP2gbyz3B9',
+      href: 'https://maps.app.goo.gl/ZYh97vzFxwRQW2PD7?utm_source=website&utm_medium=header&utm_campaign=mubarokahdigitalxwdr',
       label: 'Lokasi',
       external: true,
     },
@@ -64,7 +64,7 @@ export function Footer() {
           <div>
             <h3 className="font-bold text-lg mb-2">WDR Coffee</h3>
             <p className="text-sm opacity-80">
-              Made with ❤️ by PT MUBAROKAH DIGITAL NUSANTARA
+             Tempat nongkrong & ngopi, Free Wifi, Harga terjangkau, Buka 24 Jam.
             </p>
           </div>
           <div>
@@ -104,7 +104,7 @@ export function Footer() {
         </div>
         <div className="mt-8 border-t border-primary-foreground/20 pt-4 text-center text-xs opacity-70">
           <p>
-            &copy; {new Date().getFullYear()} WDR Coffee. All rights reserved.
+            Made with ❤️ by PT MUBAROKAH DIGITAL NUSANTARA
           </p>
         </div>
       </div>

@@ -2,6 +2,10 @@ import { ContactForm } from '@/components/contact/ContactForm';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Facebook, Instagram, Twitter } from 'lucide-react';
 import Link from 'next/link';
+import { Button } from "@/components/ui/button";
+import { Footer } from "@/components/layout/Footer";
+import { Header } from '@/components/layout/Header';
+
 
 const TikTokIcon = () => (
   <svg
@@ -47,21 +51,9 @@ const socialLinks = [
 
 export default function ContactPage() {
   return (
-    <div className="bg-background">
-      <header className="py-4 border-b">
-        <div className="container mx-auto px-4 flex justify-between items-center">
-          <Link href="/" className="text-2xl font-bold text-primary">
-            WDR Coffee
-          </Link>
-          <nav className="flex items-center gap-4">
-             <Link href="/" className="hover:text-primary">Home</Link>
-             <Link href="/contact" className="font-bold text-primary">Kontak</Link>
-             <Link href="https://maps.app.goo.gl/wLzJ41VvP2gbyz3B9" target="_blank" rel="noopener noreferrer" className="hover:text-primary">Lokasi</Link>
-          </nav>
-        </div>
-      </header>
-
-      <main className="container mx-auto px-4 py-8 md:py-16">
+    <div className="bg-background flex flex-col min-h-screen">
+      <Header activePage="kontak" />
+      <main className="container mx-auto px-4 py-8 md:py-16 flex-1">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold tracking-tight">Hubungi Kami</h1>
           <p className="mt-2 text-lg text-muted-foreground">
@@ -122,7 +114,3 @@ export default function ContactPage() {
     </div>
   );
 }
-
-import { Button } from "@/components/ui/button";
-import { Footer } from "@/components/layout/Footer";
-
