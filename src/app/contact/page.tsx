@@ -76,7 +76,7 @@ export default function ContactPage() {
               kampung inggris, Jl. Anyelir, Mangunrejo, Tulungrejo, Kec. Pare, Kabupaten Kediri, Jawa Timur
               </p>
               <p className="text-muted-foreground mt-2">
-                <strong>WhatsApp:</strong> +62 852-5791-9775
+                <strong>Instagram:</strong> <Link href="https://www.instagram.com/wdr.coffee/">@wdr.coffee</Link>
               </p>
             </div>
              <div>
