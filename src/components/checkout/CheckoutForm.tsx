@@ -53,7 +53,7 @@ export function CheckoutForm({ tableNumber }: { tableNumber: string | null }) {
     window.location.href = whatsappUrl;
 
     // Clear cart after redirecting
-    setTimeout(clearCart, 500); // Small delay to ensure redirect starts
+    setTimeout(() => clearCart(false), 500); // Small delay to ensure redirect starts
   }
 
   return (

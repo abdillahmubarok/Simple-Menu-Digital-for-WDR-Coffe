@@ -16,7 +16,7 @@ interface CartContextType {
   addItem: (item: MenuItem & { categoryId: string }, opts?: { note?: string }) => void;
   updateQty: (itemId: string, qty: number) => void;
   updateNote: (itemId: string, note: string) => void;
-  clearCart: () => void;
+  clearCart: (showToast?: boolean) => void;
   cartTotal: () => number;
   getItem: (itemId: string) => CartItem | undefined;
 }
@@ -103,11 +103,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
     });
   };
 
-  const clearCart = () => {
+  const clearCart = (showToast = true) => {
     setCart(getInitialCart());
     try {
       localStorage.removeItem(CART_STORAGE_KEY);
-      toast({ title: 'Keranjang dikosongkan', description: 'Silakan mulai memesan lagi.' });
+      if (showToast) {
+        toast({ title: 'Keranjang dikosongkan', description: 'Silakan mulai memesan lagi.' });
+      }
     } catch (error) {
       console.warn('Could not clear cart from localStorage', error);
     }
