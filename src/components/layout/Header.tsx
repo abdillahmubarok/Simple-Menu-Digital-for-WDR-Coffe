@@ -8,6 +8,8 @@ import { cn } from '@/lib/utils';
 import {
   Sheet,
   SheetContent,
+  SheetHeader,
+  SheetTitle,
   SheetTrigger,
   SheetClose,
 } from '@/components/ui/sheet';
@@ -85,6 +87,9 @@ function HeaderContent({ activePage }: HeaderProps) {
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-3/4">
+              <SheetHeader>
+                <SheetTitle className="text-left">Navigasi</SheetTitle>
+              </SheetHeader>
               <nav className="flex flex-col gap-4 mt-8">
                 {navLinks.map((link) => (
                   <SheetClose key={link.id} asChild>
