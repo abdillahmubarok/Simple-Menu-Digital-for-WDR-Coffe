@@ -18,32 +18,32 @@ export function generateWhatsAppMessage(
   });
 
   const header = [
-    'WDR Coffee – Pesanan Baru',
-    `Tanggal: ${date} ${time}`,
+    '*WDR Coffee – Pesanan Baru*',
+    `*Tanggal:* ${date} ${time}`,
   ];
   if (tableNumber) {
-    header.push(`Meja: ${tableNumber}`);
+    header.push(`*Meja:* ${tableNumber}`);
   }
-  header.push(`Pelanggan: ${customerInfo.name}`);
-  header.push(`Nomor HP: ${customerInfo.phone}`);
+  header.push(`*Pelanggan:* ${customerInfo.name}`);
+  header.push(`*Nomor HP:* ${customerInfo.phone}`);
 
   const items = cart.items.map((item) => {
     let itemLine = `- ${item.name} x${item.qty} @ ${formatCurrency(
       item.price
-    )} = ${formatCurrency(item.price * item.qty)}`;
+    )} = *${formatCurrency(item.price * item.qty)}*`;
     if (item.note) {
-      itemLine += `\n  • Catatan: ${item.note}`;
+      itemLine += `\n  • _Catatan: ${item.note}_`;
     }
     return itemLine;
   });
 
   const total = cart.items.reduce((sum, item) => sum + item.price * item.qty, 0);
 
-  const footer = `Total: ${formatCurrency(total)}`;
+  const footer = `*Total: ${formatCurrency(total)}*`;
 
   return [
     header.join('\n'),
-    '\nItem:',
+    '\n*Item:*',
     items.join('\n'),
     '\n',
     footer,
@@ -51,7 +51,12 @@ export function generateWhatsAppMessage(
 }
 
 export function generateWhatsAppLink(message: string): string {
-  const phoneNumber = '6285257919775';
+  const phoneNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '';
+  if (!phoneNumber) {
+    console.error('WhatsApp number is not configured in environment variables.');
+    // Fallback or throw an error
+    return '';
+  }
   const encodedMessage = encodeURIComponent(message);
   return `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
 }

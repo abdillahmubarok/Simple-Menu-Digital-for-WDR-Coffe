@@ -14,9 +14,9 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { normalizePhoneNumber } from '@/lib/phone';
-import { isValidIndonesianPhoneNumber } from '@/lib/phone';
-import { generateWhatsAppLink } from '@/lib/whatsapp';
+import { normalizePhoneNumber, isValidIndonesianPhoneNumber } from '@/lib/phone';
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
+import { useToast } from '@/hooks/use-toast';
 
 const contactSchema = z.object({
   name: z
@@ -38,12 +38,14 @@ type ContactSchema = z.infer<typeof contactSchema>;
 function generateContactMessage(data: ContactSchema): string {
   const header = `Pesan Kontak Baru dari ${data.name}`;
   const customerInfo = `No. HP: ${data.phone}`;
-  const message = `Pesan:\n${data.message}`;
+  const messageBody = `Pesan:\n${data.message}`;
   
-  return [header, customerInfo, message].join('\n\n');
+  return [header, customerInfo, messageBody].join('\n\n');
 }
 
 export function ContactForm() {
+  const { executeRecaptcha } = useGoogleReCaptcha();
+  const { toast } = useToast();
   const form = useForm<ContactSchema>({
     resolver: zodResolver(contactSchema),
     defaultValues: {
@@ -53,20 +55,47 @@ export function ContactForm() {
     },
   });
 
-  function onSubmit(values: ContactSchema) {
-    const normalizedPhone = normalizePhoneNumber(values.phone);
-    if (!normalizedPhone) {
-      form.setError('phone', {
-        type: 'manual',
-        message: 'Nomor HP tidak valid.',
+  async function onSubmit(values: ContactSchema) {
+     if (!executeRecaptcha) {
+      toast({
+        variant: 'destructive',
+        title: 'Error',
+        description: 'reCAPTCHA belum siap. Silakan coba lagi.',
       });
       return;
     }
 
-    const message = generateContactMessage({ ...values, phone: normalizedPhone });
-    const whatsappUrl = generateWhatsAppLink(message);
+    const token = await executeRecaptcha('contact_form');
+    const normalizedPhone = normalizePhoneNumber(values.phone);
+    if (!normalizedPhone) {
+      form.setError('phone', { type: 'manual', message: 'Nomor HP tidak valid.' });
+      return;
+    }
 
-    window.location.href = whatsappUrl;
+    const message = generateContactMessage({ ...values, phone: normalizedPhone });
+
+    try {
+      const response = await fetch('/api/send-whatsapp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token, message }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Gagal mengirim pesan.');
+      }
+
+      window.location.href = data.whatsappUrl;
+    } catch (error) {
+       const errorMessage = error instanceof Error ? error.message : 'Terjadi kesalahan tidak diketahui';
+      toast({
+        variant: 'destructive',
+        title: 'Gagal Mengirim Pesan',
+        description: errorMessage,
+      });
+    }
   }
 
   return (
