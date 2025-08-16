@@ -58,7 +58,7 @@ export function MenuCard({ item, categoryId }: MenuCardProps) {
     <Card className="flex flex-col overflow-hidden rounded-2xl shadow-sm hover:shadow-lg transition-shadow duration-300">
       <CardHeader className="p-0">
         <Image
-          src={`https://placehold.co/400x300.png`}
+          src={item.image}
           data-ai-hint="coffee food"
           alt={item.name}
           width={400}
