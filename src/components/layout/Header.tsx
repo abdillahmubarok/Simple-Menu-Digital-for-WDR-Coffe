@@ -47,8 +47,15 @@ function HeaderContent({ activePage }: HeaderProps) {
 
   return (
     <div className="container mx-auto px-4 flex justify-between items-center">
-      <Link href="/" className="text-2xl font-bold text-primary">
-      WDR Coffe
+      <Link href="/">
+        <Image
+          src="https://i.ibb.co/20GLj11v/wdr-coffee-logo.png"
+          alt="WDR Coffee Logo"
+          width={125}
+          height={75}
+          className="h-12 w-auto"
+          priority
+        />
       </Link>
       {/* Desktop Navigation */}
       <nav className="hidden md:flex items-center gap-2">
@@ -87,7 +94,7 @@ function HeaderContent({ activePage }: HeaderProps) {
                 <span className="sr-only">Buka Menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-3/4">
+            <SheetContent side="right" className="w-full sm:w-3/4">
               <SheetHeader>
                 <SheetTitle className="text-left">WDR Coffee</SheetTitle>
               </SheetHeader>
@@ -121,7 +128,7 @@ function HeaderContent({ activePage }: HeaderProps) {
 
 export function Header({ activePage }: HeaderProps) {
   return (
-    <header className="py-4 border-b sticky top-0 bg-background/80 backdrop-blur-sm z-40">
+    <header className="py-2 border-b sticky top-0 bg-background/80 backdrop-blur-sm z-40">
       <Suspense
         fallback={<div className="container mx-auto px-4">Loading...</div>}
       >
