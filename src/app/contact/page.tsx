@@ -28,7 +28,7 @@ const TikTokIcon = () => (
 
 const socialLinks = [
   {
-    href: '#',
+    href: 'https://www.instagram.com/wdr.coffee',
     icon: <Instagram />,
     label: 'Instagram',
   },
@@ -77,7 +77,7 @@ export default function ContactPage() {
             <div>
               <h3 className="text-2xl font-semibold mb-4">Informasi Kontak</h3>
               <p className="text-muted-foreground">
-                Jl. Ahmad Yani, Pandean, Kecamatan Mejayan, Kabupaten Madiun, Jawa Timur 63153
+              kampung inggris, Jl. Anyelir, Mangunrejo, Tulungrejo, Kec. Pare, Kabupaten Kediri, Jawa Timur
               </p>
               <p className="text-muted-foreground mt-2">
                 <strong>WhatsApp:</strong> +62 852-5791-9775

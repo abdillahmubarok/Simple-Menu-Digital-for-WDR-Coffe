@@ -23,7 +23,7 @@ const TikTokIcon = () => (
 export function Footer() {
   const socialLinks = [
     {
-      href: '#',
+      href: 'https://www.instagram.com/wdr.coffee',
       icon: <Instagram />,
       label: 'Instagram',
     },
@@ -104,7 +104,8 @@ export function Footer() {
         </div>
         <div className="mt-8 border-t border-primary-foreground/20 pt-4 text-center text-xs opacity-70">
           <p>
-            Made with ❤️ by PT MUBAROKAH DIGITAL NUSANTARA
+            <Link href="https://mubarokah.com" target='_blank' rel="noopener noreferrer">Made with ❤️ by PT MUBAROKAH DIGITAL NUSANTARA
+            </Link>
           </p>
         </div>
       </div>
