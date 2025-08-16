@@ -5,7 +5,7 @@ export const MENU: Category[] = [
     id: 'food',
     name: 'Food',
     items: [
-      { id: 'ayteri', name: 'Ayam Teriyaki', price: 9000, desc: 'Nasi + Ayam Teriyaki', image: 'https://placehold.co/400x300.png' },
+      { id: 'ayteri', name: 'Ayam Teriyaki', price: 9000, desc: 'Nasi + Ayam Teriyaki', image: 'https://i.ibb.co.com/mr9ny6X5/ayam-teriyaki-wdr.webp' },
       { id: 'aylh', name: 'Ayam Lada Hitam', price: 9000, desc: 'Nasi + Ayam Lada Hitam', image: 'https://placehold.co/400x300.png' },
       { id: 'ckc', name: 'Chiken Katsu Curry', price: 9000, desc: 'Nasi + Chiken Katsu Curry', image: 'https://placehold.co/400x300.png' },
       { id: 'ag', name: 'Ayam Geprek', price: 8000, desc: 'Nasi + Ayam Geprek', image: 'https://placehold.co/400x300.png' },

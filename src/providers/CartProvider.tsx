@@ -71,6 +71,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
           qty: 1,
           note: opts.note,
           categoryId: item.categoryId,
+          image: item.image,
         };
         newItems = [...prevCart.items, newCartItem];
       }

@@ -19,7 +19,7 @@ export function CartItemCard({ item }: { item: CartItem }) {
   return (
     <div className="flex gap-4">
       <Image
-        src={`https://placehold.co/100x100.png`}
+        src={item.image}
         data-ai-hint="coffee product"
         alt={item.name}
         width={80}

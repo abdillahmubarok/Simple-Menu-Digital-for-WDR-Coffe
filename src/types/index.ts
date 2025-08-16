@@ -19,6 +19,7 @@ export interface CartItem {
   qty: number;
   note?: string;
   categoryId: string;
+  image: string;
 }
 
 export interface Cart {
