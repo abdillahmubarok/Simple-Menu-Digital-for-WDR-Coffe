@@ -37,11 +37,7 @@ export function Footer() {
       icon: <Twitter />,
       label: 'Twitter',
     },
-    {
-      href: '#',
-      icon: <TikTokIcon />,
-      label: 'TikTok',
-    },
+    
   ];
 
   const navLinks = [
@@ -68,7 +64,7 @@ export function Footer() {
             </p>
           </div>
           <div>
-            <h3 className="font-bold text-lg mb-2">Navigasi</h3>
+            <h3 className="font-bold text-lg mb-2">Quick Links</h3>
             <ul className="space-y-1">
               {navLinks.map((link) => (
                 <li key={link.href}>
@@ -104,7 +100,8 @@ export function Footer() {
         </div>
         <div className="mt-8 border-t border-primary-foreground/20 pt-4 text-center text-xs opacity-70">
           <p>
-            <Link href="https://mubarokah.com" target='_blank' rel="noopener noreferrer">Made with ❤️ by PT MUBAROKAH DIGITAL NUSANTARA
+          Made with ❤️ by 
+            <Link href="https://mubarokah.com" target='_blank' rel="noopener noreferrer"> PT MUBAROKAH DIGITAL NUSANTARA
             </Link>
           </p>
         </div>

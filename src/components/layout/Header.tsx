@@ -5,6 +5,7 @@ import { Suspense, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Home, MapPin, Phone, Menu } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import Image from 'next/image';
 import {
   Sheet,
   SheetContent,
@@ -47,7 +48,7 @@ function HeaderContent({ activePage }: HeaderProps) {
   return (
     <div className="container mx-auto px-4 flex justify-between items-center">
       <Link href="/" className="text-2xl font-bold text-primary">
-        WDR Coffee
+      WDR Coffe
       </Link>
       {/* Desktop Navigation */}
       <nav className="hidden md:flex items-center gap-2">
@@ -88,7 +89,7 @@ function HeaderContent({ activePage }: HeaderProps) {
             </SheetTrigger>
             <SheetContent side="right" className="w-3/4">
               <SheetHeader>
-                <SheetTitle className="text-left">Navigasi</SheetTitle>
+                <SheetTitle className="text-left">WDR Coffee</SheetTitle>
               </SheetHeader>
               <nav className="flex flex-col gap-4 mt-8">
                 {navLinks.map((link) => (

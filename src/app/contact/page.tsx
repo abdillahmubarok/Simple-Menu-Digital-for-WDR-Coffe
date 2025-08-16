@@ -42,11 +42,7 @@ const socialLinks = [
     icon: <Twitter />,
     label: 'Twitter',
   },
-  {
-    href: '#',
-    icon: <TikTokIcon />,
-    label: 'TikTok',
-  },
+  
 ];
 
 export default function ContactPage() {
