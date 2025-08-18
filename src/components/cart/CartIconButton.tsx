@@ -17,7 +17,7 @@ export function CartIconButton() {
         <Button
           onClick={() => setIsOpen(true)}
           size="icon"
-          className="h-16 w-16 rounded-full shadow-lg"
+          className="h-16 w-16 rounded-full shadow-lg hover:shadow-2xl transition-shadow duration-300"
           aria-label={`Buka keranjang (${itemCount} item)`}
         >
           <ShoppingBag className="h-8 w-8" />

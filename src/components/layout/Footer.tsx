@@ -54,7 +54,7 @@ export function Footer() {
   ];
 
   return (
-    <footer className="bg-primary text-primary-foreground">
+    <footer className="bg-secondary text-secondary-foreground">
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
           <div>
@@ -98,10 +98,10 @@ export function Footer() {
             </div>
           </div>
         </div>
-        <div className="mt-8 border-t border-primary-foreground/20 pt-4 text-center text-xs opacity-70">
+        <div className="mt-8 border-t border-secondary-foreground/20 pt-4 text-center text-xs opacity-70">
           <p>
           Made with ❤️ by 
-            <Link href="https://mubarokah.com" target='_blank' rel="noopener noreferrer"> PT MUBAROKAH DIGITAL NUSANTARA
+            <Link href="https://mubarokah.com" target='_blank' rel="noopener noreferrer" className="hover:underline"> PT MUBAROKAH DIGITAL NUSANTARA
             </Link>
           </p>
         </div>
