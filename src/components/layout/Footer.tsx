@@ -105,7 +105,7 @@ export function Footer() {
         </div>
         <div className="mt-8 border-t border-secondary-foreground/20 pt-4 text-center text-xs opacity-70">
           <p>
-          {t('footer_madeWith')} ❤️ by 
+          {t('footer_madeWith')} ❤️ {t('footer_by')} 
             <Link href="https://mubarokah.com" target='_blank' rel="noopener noreferrer" className="hover:underline"> PT MUBAROKAH DIGITAL NUSANTARA
             </Link>
           </p>
