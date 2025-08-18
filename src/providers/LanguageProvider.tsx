@@ -20,16 +20,21 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguage] = useState<Language>('id');
 
   useEffect(() => {
-    const browserLang = navigator.language.split('-')[0];
-    if (browserLang === 'en' || browserLang === 'id') {
-      setLanguage(browserLang);
-    } else {
-      setLanguage('id'); // Default to Indonesian
+    // Check if window is defined (runs only on client)
+    if (typeof window !== 'undefined') {
+      const browserLang = navigator.language.split('-')[0];
+      if (browserLang === 'en' || browserLang === 'id') {
+        setLanguage(browserLang);
+      } else {
+        setLanguage('id'); // Default to Indonesian
+      }
     }
   }, []);
 
   useEffect(() => {
-    document.documentElement.lang = language;
+    if (typeof document !== 'undefined') {
+      document.documentElement.lang = language;
+    }
   }, [language]);
 
 
