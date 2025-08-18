@@ -18,6 +18,7 @@ import { formatCurrency } from '@/lib/currency';
 import { Plus } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { QuantityControl } from './QuantityControl';
+import { useLanguage } from '@/hooks/use-language';
 
 interface MenuCardProps {
   item: MenuItem;
@@ -27,14 +28,15 @@ interface MenuCardProps {
 export function MenuCard({ item, categoryId }: MenuCardProps) {
   const { addItem, updateQty, getItem } = useCart();
   const { toast } = useToast();
+  const { t } = useLanguage();
   const [note, setNote] = useState('');
   const cartItem = getItem(item.id);
 
   const handleAddToCart = () => {
     addItem({ ...item, categoryId }, { note });
     toast({
-      title: `${item.name} ditambahkan`,
-      description: `Catatan: ${note || 'Tidak ada'}`,
+      title: t('toast_itemAdded', { name: item.name }),
+      description: `${t('toast_note')}: ${note || t('toast_noNote')}`,
     });
   };
 
@@ -78,7 +80,7 @@ export function MenuCard({ item, categoryId }: MenuCardProps) {
       <CardFooter className="flex flex-col items-start gap-2 p-4 pt-0">
         {cartItem ? (
           <div className="w-full">
-            <p className="text-sm font-medium mb-2">Di keranjang:</p>
+            <p className="text-sm font-medium mb-2">{t('menuCard_inCart')}:</p>
             <QuantityControl
               quantity={cartItem.qty}
               onQuantityChange={handleQuantityChange}
@@ -88,14 +90,14 @@ export function MenuCard({ item, categoryId }: MenuCardProps) {
           <>
             <Input
               type="text"
-              placeholder="Catatan (opsional)"
+              placeholder={t('menuCard_notePlaceholder')}
               value={note}
               onChange={handleNoteChange}
               className="h-9"
             />
             <Button className="w-full" onClick={handleAddToCart}>
               <Plus className="mr-2 h-4 w-4" />
-              Tambah
+              {t('menuCard_add')}
             </Button>
           </>
         )}

@@ -3,6 +3,7 @@
 import { createContext, useState, useEffect, type ReactNode } from 'react';
 import type { Cart, CartItem, MenuItem } from '@/types';
 import { useToast } from '@/hooks/use-toast';
+import { useLanguage } from '@/hooks/use-language';
 
 const CART_STORAGE_KEY = 'wdr_cart_v1';
 
@@ -26,6 +27,7 @@ export const CartContext = createContext<CartContextType | undefined>(undefined)
 export function CartProvider({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<Cart>(getInitialCart());
   const { toast } = useToast();
+  const { t } = useLanguage();
 
   useEffect(() => {
     try {
@@ -81,7 +83,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const updateQty = (itemId: string, qty: number) => {
     if (qty < 1) {
-      toast({ title: 'Item dihapus dari keranjang' });
+       toast({ title: t('toast_itemRemoved') });
     }
     setCart((prevCart) => {
       if (qty < 1) {
@@ -107,7 +109,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const clearCart = (showToast = true) => {
     if (showToast) {
-       toast({ title: 'Keranjang dikosongkan', description: 'Silakan mulai memesan lagi.' });
+       toast({ title: t('toast_cartCleared'), description: t('toast_cartClearedDescription') });
     }
     setCart(getInitialCart());
     try {

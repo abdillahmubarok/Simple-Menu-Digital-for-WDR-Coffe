@@ -1,5 +1,8 @@
+'use client';
+
 import Link from 'next/link';
 import { Facebook, Instagram, Twitter } from 'lucide-react';
+import { useLanguage } from '@/hooks/use-language';
 
 const TikTokIcon = () => (
   <svg
@@ -21,6 +24,8 @@ const TikTokIcon = () => (
 );
 
 export function Footer() {
+  const { t } = useLanguage();
+
   const socialLinks = [
     {
       href: 'https://www.instagram.com/wdr.coffee',
@@ -41,14 +46,14 @@ export function Footer() {
   ];
 
   const navLinks = [
-     { href: '/', label: 'Home' },
+     { href: '/', label: t('nav_home') },
     {
       href: '/contact',
-      label: 'Kontak',
+      label: t('nav_contact'),
     },
     {
       href: 'https://maps.app.goo.gl/ZYh97vzFxwRQW2PD7?utm_source=website&utm_medium=header&utm_campaign=mubarokahdigitalxwdr',
-      label: 'Lokasi',
+      label: t('nav_location'),
       external: true,
     },
   ];
@@ -60,11 +65,11 @@ export function Footer() {
           <div>
             <h3 className="font-bold text-lg mb-2">WDR Coffee</h3>
             <p className="text-sm opacity-80">
-             Tempat nongkrong & ngopi, Free Wifi, Harga terjangkau, Buka 24 Jam.
+             {t('footer_description')}
             </p>
           </div>
           <div>
-            <h3 className="font-bold text-lg mb-2">Quick Links</h3>
+            <h3 className="font-bold text-lg mb-2">{t('footer_quickLinks')}</h3>
             <ul className="space-y-1">
               {navLinks.map((link) => (
                 <li key={link.href}>
@@ -81,7 +86,7 @@ export function Footer() {
             </ul>
           </div>
           <div>
-            <h3 className="font-bold text-lg mb-2">Ikuti Kami</h3>
+            <h3 className="font-bold text-lg mb-2">{t('footer_followUs')}</h3>
             <div className="flex justify-center md:justify-start gap-4">
               {socialLinks.map((link) => (
                 <Link
@@ -100,7 +105,7 @@ export function Footer() {
         </div>
         <div className="mt-8 border-t border-secondary-foreground/20 pt-4 text-center text-xs opacity-70">
           <p>
-          Made with ❤️ by 
+          {t('footer_madeWith')} ❤️ by 
             <Link href="https://mubarokah.com" target='_blank' rel="noopener noreferrer" className="hover:underline"> PT MUBAROKAH DIGITAL NUSANTARA
             </Link>
           </p>

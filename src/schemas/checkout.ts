@@ -1,15 +1,15 @@
 import { z } from 'zod';
 import { isValidIndonesianPhoneNumber } from '@/lib/phone';
 
-export const checkoutSchema = z.object({
+export const getCheckoutSchema = (t: (key: string, params?: any) => string) => z.object({
   name: z
     .string()
-    .min(2, { message: 'Nama harus memiliki setidaknya 2 karakter.' }),
+    .min(2, { message: t('validation_name_min', { min: 2 }) }),
   phone: z
     .string()
     .refine(isValidIndonesianPhoneNumber, {
-      message: 'Format nomor HP tidak valid. Gunakan 08... atau +628...',
+      message: t('validation_phone_invalid'),
     }),
 });
 
-export type CheckoutSchema = z.infer<typeof checkoutSchema>;
+export type CheckoutSchema = z.infer<ReturnType<typeof getCheckoutSchema>>;

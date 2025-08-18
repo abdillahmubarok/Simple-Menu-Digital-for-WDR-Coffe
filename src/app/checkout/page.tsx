@@ -10,23 +10,25 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import { Footer } from '@/components/layout/Footer';
+import { useLanguage } from '@/hooks/use-language';
 
 function CheckoutPageContent() {
   const searchParams = useSearchParams();
   const table = searchParams.get('table');
   const { cart } = useCart();
+  const { t } = useLanguage();
 
   if (cart.items.length === 0) {
     return (
       <div className="text-center py-16">
-        <h2 className="text-2xl font-bold mb-4">Keranjang Anda Kosong</h2>
+        <h2 className="text-2xl font-bold mb-4">{t('checkout_cartEmptyTitle')}</h2>
         <p className="text-muted-foreground mb-6">
-          Sepertinya Anda belum menambahkan item apapun ke keranjang.
+          {t('checkout_cartEmptyDescription')}
         </p>
         <Button asChild>
           <Link href="/">
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Kembali ke Menu
+            {t('checkout_backToMenu')}
           </Link>
         </Button>
       </div>
@@ -38,7 +40,7 @@ function CheckoutPageContent() {
       <div className="space-y-6">
         <Card>
           <CardHeader>
-            <CardTitle>Formulir Pemesanan</CardTitle>
+            <CardTitle>{t('checkout_formTitle')}</CardTitle>
           </CardHeader>
           <CardContent>
             <CheckoutForm tableNumber={table} />
@@ -53,6 +55,7 @@ function CheckoutPageContent() {
 }
 
 export default function CheckoutPage() {
+  const { t } = useLanguage();
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <header className="py-4 border-b">
@@ -63,7 +66,7 @@ export default function CheckoutPage() {
           <Button variant="ghost" asChild>
             <Link href="/">
               <ArrowLeft className="mr-2 h-4 w-4" />
-              Kembali ke Menu
+              {t('checkout_backToMenu')}
             </Link>
           </Button>
         </div>

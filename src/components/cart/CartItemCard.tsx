@@ -8,9 +8,11 @@ import { Input } from '@/components/ui/input';
 import { Trash2 } from 'lucide-react';
 import { QuantityControl } from '../menu/QuantityControl';
 import Image from 'next/image';
+import { useLanguage } from '@/hooks/use-language';
 
 export function CartItemCard({ item }: { item: CartItem }) {
   const { updateQty, updateNote } = useCart();
+  const { t } = useLanguage();
 
   const handleNoteChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     updateNote(item.id, e.target.value);
@@ -49,14 +51,14 @@ export function CartItemCard({ item }: { item: CartItem }) {
             size="icon"
             className="h-8 w-8 text-muted-foreground hover:text-destructive"
             onClick={() => updateQty(item.id, 0)}
-            aria-label={`Hapus ${item.name}`}
+            aria-label={t('cart_remove_item', { name: item.name })}
           >
             <Trash2 className="h-4 w-4" />
           </Button>
         </div>
         <Input
           type="text"
-          placeholder="Catatan (opsional)"
+          placeholder={t('cart_item_note_placeholder')}
           value={item.note || ''}
           onChange={handleNoteChange}
           className="h-8 mt-2 text-xs"

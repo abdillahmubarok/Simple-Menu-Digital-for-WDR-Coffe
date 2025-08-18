@@ -4,15 +4,17 @@ import { useCart } from '@/hooks/use-cart';
 import { formatCurrency } from '@/lib/currency';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
+import { useLanguage } from '@/hooks/use-language';
 
 export function OrderSummary() {
   const { cart, cartTotal } = useCart();
+  const { t } = useLanguage();
   const total = cartTotal();
 
   return (
     <Card className="sticky top-8">
       <CardHeader>
-        <CardTitle>Ringkasan Pesanan</CardTitle>
+        <CardTitle>{t('summary_title')}</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         {cart.items.map((item) => (
@@ -32,17 +34,17 @@ export function OrderSummary() {
         ))}
         <Separator />
         <div className="flex justify-between">
-          <span>Subtotal</span>
+          <span>{t('summary_subtotal')}</span>
           <span>{formatCurrency(total)}</span>
         </div>
         <div className="flex justify-between">
-          <span>Pajak & Biaya</span>
+          <span>{t('summary_taxAndFees')}</span>
           <span>{formatCurrency(0)}</span>
         </div>
       </CardContent>
       <CardFooter>
         <div className="w-full flex justify-between font-bold text-xl">
-          <span>Total</span>
+          <span>{t('summary_total')}</span>
           <span>{formatCurrency(total)}</span>
         </div>
       </CardFooter>

@@ -3,6 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Minus, Plus } from 'lucide-react';
+import { useLanguage } from '@/hooks/use-language';
 
 interface QuantityControlProps {
   quantity: number;
@@ -15,6 +16,7 @@ export function QuantityControl({
   onQuantityChange,
   size = 'default',
 }: QuantityControlProps) {
+  const { t } = useLanguage();
   const handleDecrement = () => {
     onQuantityChange(Math.max(0, quantity - 1));
   };
@@ -33,7 +35,7 @@ export function QuantityControl({
         size="icon"
         className={size === 'sm' ? 'h-8 w-8' : 'h-10 w-10'}
         onClick={handleDecrement}
-        aria-label="Kurangi jumlah"
+        aria-label={t('quantity_decrease')}
       >
         <Minus className="h-4 w-4" />
       </Button>
@@ -42,14 +44,14 @@ export function QuantityControl({
         className={`${inputClass} text-center`}
         value={quantity}
         readOnly
-        aria-label="Jumlah saat ini"
+        aria-label={t('quantity_current')}
       />
       <Button
         variant="outline"
         size="icon"
         className={size === 'sm' ? 'h-8 w-8' : 'h-10 w-10'}
         onClick={handleIncrement}
-        aria-label="Tambah jumlah"
+        aria-label={t('quantity_increase')}
       >
         <Plus className="h-4 w-4" />
       </Button>

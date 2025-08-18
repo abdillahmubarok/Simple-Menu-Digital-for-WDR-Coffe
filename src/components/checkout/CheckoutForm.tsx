@@ -14,15 +14,19 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/hooks/use-cart';
 import { normalizePhoneNumber } from '@/lib/phone';
-import { checkoutSchema, type CheckoutSchema } from '@/schemas/checkout';
+import { getCheckoutSchema } from '@/schemas/checkout';
+import type { CheckoutSchema } from '@/schemas/checkout';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import { useToast } from '@/hooks/use-toast';
 import { generateWhatsAppMessage } from '@/lib/whatsapp';
+import { useLanguage } from '@/hooks/use-language';
 
 export function CheckoutForm({ tableNumber }: { tableNumber: string | null }) {
   const { cart, clearCart } = useCart();
   const { executeRecaptcha } = useGoogleReCaptcha();
   const { toast } = useToast();
+  const { t, language } = useLanguage();
+  const checkoutSchema = getCheckoutSchema(t);
 
   const form = useForm<CheckoutSchema>({
     resolver: zodResolver(checkoutSchema),
@@ -37,7 +41,7 @@ export function CheckoutForm({ tableNumber }: { tableNumber: string | null }) {
       toast({
         variant: 'destructive',
         title: 'Error',
-        description: 'reCAPTCHA belum siap. Silakan coba lagi.',
+        description: t('error_recaptchaNotReady'),
       });
       return;
     }
@@ -48,7 +52,7 @@ export function CheckoutForm({ tableNumber }: { tableNumber: string | null }) {
     if (!normalizedPhone) {
       form.setError('phone', {
         type: 'manual',
-        message: 'Nomor HP tidak valid.',
+        message: t('error_invalidPhoneNumber'),
       });
       return;
     }
@@ -56,7 +60,8 @@ export function CheckoutForm({ tableNumber }: { tableNumber: string | null }) {
     const message = generateWhatsAppMessage(
       cart,
       { name: values.name, phone: normalizedPhone },
-      tableNumber
+      tableNumber,
+      t
     );
 
     try {
@@ -72,16 +77,16 @@ export function CheckoutForm({ tableNumber }: { tableNumber: string | null }) {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || 'Gagal mengirim pesanan.');
+        throw new Error(data.message || t('error_failedToSendOrder'));
       }
 
       window.location.href = data.whatsappUrl;
       setTimeout(() => clearCart(false), 500);
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Terjadi kesalahan tidak diketahui';
+      const errorMessage = error instanceof Error ? error.message : t('error_unknown');
       toast({
         variant: 'destructive',
-        title: 'Gagal Memproses Pesanan',
+        title: t('error_failedToProcessOrder'),
         description: errorMessage,
       });
     }
@@ -95,9 +100,9 @@ export function CheckoutForm({ tableNumber }: { tableNumber: string | null }) {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Nama</FormLabel>
+              <FormLabel>{t('form_name')}</FormLabel>
               <FormControl>
-                <Input placeholder="Nama lengkap Anda" {...field} />
+                <Input placeholder={t('form_name_placeholder')} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -108,7 +113,7 @@ export function CheckoutForm({ tableNumber }: { tableNumber: string | null }) {
           name="phone"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Nomor HP (WhatsApp)</FormLabel>
+              <FormLabel>{t('form_phone')}</FormLabel>
               <FormControl>
                 <Input placeholder="08..." {...field} />
               </FormControl>
@@ -123,8 +128,8 @@ export function CheckoutForm({ tableNumber }: { tableNumber: string | null }) {
           disabled={form.formState.isSubmitting}
         >
           {form.formState.isSubmitting
-            ? 'Memproses...'
-            : 'Kirim via WhatsApp'}
+            ? t('form_submitting')
+            : t('form_submit_whatsapp')}
         </Button>
       </form>
     </Form>

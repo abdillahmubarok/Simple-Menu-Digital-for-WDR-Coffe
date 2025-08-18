@@ -3,9 +3,11 @@ import { useState } from 'react';
 import { MENU } from '@/data/menu';
 import { MenuCard } from './MenuCard';
 import { Input } from '@/components/ui/input';
+import { useLanguage } from '@/hooks/use-language';
 
 export function MenuGrid() {
   const [searchTerm, setSearchTerm] = useState('');
+  const { t } = useLanguage();
 
   const filteredMenu = MENU.map(category => ({
     ...category,
@@ -20,7 +22,7 @@ export function MenuGrid() {
       <div className="max-w-md mx-auto">
         <Input
           type="search"
-          placeholder="Cari menu..."
+          placeholder={t('menu_searchPlaceholder')}
           className="w-full"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
@@ -43,7 +45,7 @@ export function MenuGrid() {
       ) : (
         <div className="text-center py-16">
           <p className="text-xl text-muted-foreground">
-            Tidak ada item menu yang cocok dengan pencarian Anda.
+            {t('menu_noResults')}
           </p>
         </div>
       )}

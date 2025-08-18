@@ -3,6 +3,7 @@ import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { CartProvider } from '@/providers/CartProvider';
 import { AppRecaptchaProvider } from '@/providers/RecaptchaProvider';
+import { LanguageProvider } from '@/providers/LanguageProvider';
 
 export const metadata: Metadata = {
   title: 'WDR Coffee - Digital Menu',
@@ -22,12 +23,14 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
       </head>
       <body className="font-body antialiased">
-        <AppRecaptchaProvider>
-          <CartProvider>
-            {children}
-            <Toaster />
-          </CartProvider>
-        </AppRecaptchaProvider>
+        <LanguageProvider>
+          <AppRecaptchaProvider>
+            <CartProvider>
+              {children}
+              <Toaster />
+            </CartProvider>
+          </AppRecaptchaProvider>
+        </LanguageProvider>
       </body>
     </html>
   );

@@ -5,9 +5,11 @@ import { ShoppingBag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/hooks/use-cart';
 import { CartDrawer } from './CartDrawer';
+import { useLanguage } from '@/hooks/use-language';
 
 export function CartIconButton() {
   const { cart } = useCart();
+  const { t } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const itemCount = cart.items.reduce((sum, item) => sum + item.qty, 0);
 
@@ -17,8 +19,8 @@ export function CartIconButton() {
         <Button
           onClick={() => setIsOpen(true)}
           size="icon"
-          className="h-16 w-16 rounded-full shadow-lg hover:shadow-2xl transition-shadow duration-300"
-          aria-label={`Buka keranjang (${itemCount} item)`}
+          className="h-16 w-16 rounded-full shadow-lg transition-shadow duration-300 hover:shadow-2xl"
+          aria-label={t('cart_open', { count: itemCount })}
         >
           <ShoppingBag className="h-8 w-8" />
           {itemCount > 0 && (

@@ -2,7 +2,6 @@
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
 import {
   Form,
   FormControl,
@@ -14,31 +13,16 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { normalizePhoneNumber, isValidIndonesianPhoneNumber } from '@/lib/phone';
+import { normalizePhoneNumber } from '@/lib/phone';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import { useToast } from '@/hooks/use-toast';
+import { getContactSchema, type ContactSchema } from '@/schemas/contact';
+import { useLanguage } from '@/hooks/use-language';
 
-const contactSchema = z.object({
-  name: z
-    .string()
-    .min(2, { message: 'Nama harus memiliki setidaknya 2 karakter.' }),
-  phone: z
-    .string()
-    .refine(isValidIndonesianPhoneNumber, {
-      message: 'Format nomor HP tidak valid. Gunakan 08... atau +628...',
-    }),
-  message: z
-    .string()
-    .min(10, { message: 'Pesan harus memiliki setidaknya 10 karakter.' })
-    .max(500, { message: 'Pesan tidak boleh lebih dari 500 karakter.' }),
-});
-
-type ContactSchema = z.infer<typeof contactSchema>;
-
-function generateContactMessage(data: ContactSchema): string {
-  const header = `Pesan Kontak Baru dari ${data.name}`;
-  const customerInfo = `No. HP: ${data.phone}`;
-  const messageBody = `Pesan:\n${data.message}`;
+function generateContactMessage(data: ContactSchema, t: (key: string) => string): string {
+  const header = t('contact_message_header').replace('{name}', data.name);
+  const customerInfo = `${t('contact_message_phone')}: ${data.phone}`;
+  const messageBody = `${t('contact_message_body')}:\n${data.message}`;
   
   return [header, customerInfo, messageBody].join('\n\n');
 }
@@ -46,6 +30,9 @@ function generateContactMessage(data: ContactSchema): string {
 export function ContactForm() {
   const { executeRecaptcha } = useGoogleReCaptcha();
   const { toast } = useToast();
+  const { t } = useLanguage();
+  const contactSchema = getContactSchema(t);
+
   const form = useForm<ContactSchema>({
     resolver: zodResolver(contactSchema),
     defaultValues: {
@@ -60,7 +47,7 @@ export function ContactForm() {
       toast({
         variant: 'destructive',
         title: 'Error',
-        description: 'reCAPTCHA belum siap. Silakan coba lagi.',
+        description: t('error_recaptchaNotReady'),
       });
       return;
     }
@@ -68,11 +55,11 @@ export function ContactForm() {
     const token = await executeRecaptcha('contact_form');
     const normalizedPhone = normalizePhoneNumber(values.phone);
     if (!normalizedPhone) {
-      form.setError('phone', { type: 'manual', message: 'Nomor HP tidak valid.' });
+      form.setError('phone', { type: 'manual', message: t('error_invalidPhoneNumber') });
       return;
     }
 
-    const message = generateContactMessage({ ...values, phone: normalizedPhone });
+    const message = generateContactMessage({ ...values, phone: normalizedPhone }, t);
 
     try {
       const response = await fetch('/api/send-whatsapp', {
@@ -84,15 +71,15 @@ export function ContactForm() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || 'Gagal mengirim pesan.');
+        throw new Error(data.message || t('error_failedToSendOrder'));
       }
 
       window.location.href = data.whatsappUrl;
     } catch (error) {
-       const errorMessage = error instanceof Error ? error.message : 'Terjadi kesalahan tidak diketahui';
+       const errorMessage = error instanceof Error ? error.message : t('error_unknown');
       toast({
         variant: 'destructive',
-        title: 'Gagal Mengirim Pesan',
+        title: t('error_failedToSendMessage'),
         description: errorMessage,
       });
     }
@@ -106,9 +93,9 @@ export function ContactForm() {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Nama Lengkap</FormLabel>
+              <FormLabel>{t('form_name')}</FormLabel>
               <FormControl>
-                <Input placeholder="Nama Anda" {...field} />
+                <Input placeholder={t('form_name_placeholder')} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -119,7 +106,7 @@ export function ContactForm() {
           name="phone"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Nomor WhatsApp</FormLabel>
+              <FormLabel>{t('form_phone_whatsapp')}</FormLabel>
               <FormControl>
                 <Input placeholder="08..." {...field} />
               </FormControl>
@@ -132,10 +119,10 @@ export function ContactForm() {
           name="message"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Pesan</FormLabel>
+              <FormLabel>{t('form_message')}</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="Tulis pesan Anda di sini..."
+                  placeholder={t('form_message_placeholder')}
                   className="resize-none"
                   rows={5}
                   {...field}
@@ -151,7 +138,7 @@ export function ContactForm() {
           size="lg"
           disabled={form.formState.isSubmitting}
         >
-          {form.formState.isSubmitting ? 'Mengirim...' : 'Kirim Pesan'}
+          {form.formState.isSubmitting ? t('form_submittingMessage') : t('form_submitMessage')}
         </Button>
       </form>
     </Form>

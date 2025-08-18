@@ -4,7 +4,8 @@ import { formatCurrency } from './currency';
 export function generateWhatsAppMessage(
   cart: Cart,
   customerInfo: CheckoutInfo,
-  tableNumber: string | null
+  tableNumber: string | null,
+  t: (key: string) => string
 ): string {
   const now = new Date();
   const date = now.toLocaleDateString('id-ID', {
@@ -18,32 +19,32 @@ export function generateWhatsAppMessage(
   });
 
   const header = [
-    '*WDR Coffee – Pesanan Baru*',
-    `*Tanggal:* ${date} ${time}`,
+    `*WDR Coffee – ${t('whatsapp_newOrder')}*`,
+    `*${t('whatsapp_date')}:* ${date} ${time}`,
   ];
   if (tableNumber) {
-    header.push(`*Meja:* ${tableNumber}`);
+    header.push(`*${t('whatsapp_table')}:* ${tableNumber}`);
   }
-  header.push(`*Pelanggan:* ${customerInfo.name}`);
-  header.push(`*Nomor HP:* ${customerInfo.phone}`);
+  header.push(`*${t('whatsapp_customer')}:* ${customerInfo.name}`);
+  header.push(`*${t('whatsapp_phone')}:* ${customerInfo.phone}`);
 
   const items = cart.items.map((item) => {
     let itemLine = `- ${item.name} x${item.qty} @ ${formatCurrency(
       item.price
     )} = *${formatCurrency(item.price * item.qty)}*`;
     if (item.note) {
-      itemLine += `\n  • _Catatan: ${item.note}_`;
+      itemLine += `\n  • _${t('whatsapp_note')}: ${item.note}_`;
     }
     return itemLine;
   });
 
   const total = cart.items.reduce((sum, item) => sum + item.price * item.qty, 0);
 
-  const footer = `*Total: ${formatCurrency(total)}*`;
+  const footer = `*${t('whatsapp_total')}: ${formatCurrency(total)}*`;
 
   return [
     header.join('\n'),
-    '\n*Item:*',
+    `\n*${t('whatsapp_items')}:*`,
     items.join('\n'),
     '\n',
     footer,

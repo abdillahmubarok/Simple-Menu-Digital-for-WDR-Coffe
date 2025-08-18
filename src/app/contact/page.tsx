@@ -1,3 +1,5 @@
+'use client';
+
 import { ContactForm } from '@/components/contact/ContactForm';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Facebook, Instagram, Twitter } from 'lucide-react';
@@ -5,6 +7,7 @@ import Link from 'next/link';
 import { Button } from "@/components/ui/button";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from '@/components/layout/Header';
+import { useLanguage } from '@/hooks/use-language';
 
 
 const TikTokIcon = () => (
@@ -46,14 +49,16 @@ const socialLinks = [
 ];
 
 export default function ContactPage() {
+  const { t } = useLanguage();
+
   return (
     <div className="bg-background flex flex-col min-h-screen">
       <Header activePage="kontak" />
       <main className="container mx-auto px-4 py-8 md:py-16 flex-1">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold tracking-tight">Hubungi Kami</h1>
+          <h1 className="text-4xl font-bold tracking-tight">{t('contact_title')}</h1>
           <p className="mt-2 text-lg text-muted-foreground">
-            Kami senang mendengar dari Anda!
+            {t('contact_subtitle')}
           </p>
         </div>
 
@@ -61,7 +66,7 @@ export default function ContactPage() {
           <div>
             <Card>
               <CardHeader>
-                <CardTitle>Kirim Pesan</CardTitle>
+                <CardTitle>{t('contact_formTitle')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <ContactForm />
@@ -71,7 +76,7 @@ export default function ContactPage() {
 
           <div className="space-y-8">
             <div>
-              <h3 className="text-2xl font-semibold mb-4">Informasi Kontak</h3>
+              <h3 className="text-2xl font-semibold mb-4">{t('contact_infoTitle')}</h3>
               <p className="text-muted-foreground">
               kampung inggris, Jl. Anyelir, Mangunrejo, Tulungrejo, Kec. Pare, Kabupaten Kediri, Jawa Timur
               </p>
@@ -80,13 +85,13 @@ export default function ContactPage() {
               </p>
             </div>
              <div>
-              <h3 className="text-2xl font-semibold mb-4">Temukan Kami</h3>
+              <h3 className="text-2xl font-semibold mb-4">{t('contact_findUsTitle')}</h3>
                 <div className="aspect-video overflow-hidden rounded-xl border">
                  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3953.324023229314!2d112.17906987517013!3d-7.755417176904444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e785d002374ed17%3A0xf96cf4719553fb03!2sWDR%20COFFEE!5e0!3m2!1sid!2sid!4v1755329172708!5m2!1sid!2sid" width="100%" height="100%" style={{border:0}} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
             <div>
-              <h3 className="text-2xl font-semibold mb-4">Terhubung dengan Kami</h3>
+              <h3 className="text-2xl font-semibold mb-4">{t('contact_connectWithUsTitle')}</h3>
               <div className="flex gap-4">
                 {socialLinks.map((link) => (
                   <Button key={link.label} variant="outline" size="icon" asChild>
